@@ -1,6 +1,7 @@
 .venv/
 tools/__pycache__/
-services/pptx-service/node_modules/
-services/pptx-service/package-lock.json
-services/pptx-service/package.json
+services/*/node_modules/
 .env
+presentation-engine/node_modules/
+presentation-engine/backup/
+presentation-engine/output/
