@@ -1,0 +1,21 @@
+# Never copy node_modules — dependencies are installed fresh inside the image
+**/node_modules
+
+# Generated output and backups from the presentation engine
+presentation-engine/output/
+presentation-engine/backup/
+
+# Python virtual environment
+.venv/
+
+# Environment files with secrets
+.env
+
+# Everything else not needed by the server
+services/test.js
+old_approaches/
+tools/
+agents/
+.claude/
+.git/
+knowledge/
