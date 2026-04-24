@@ -442,3 +442,5 @@ instructions: |
 
   FINAL RULE
   Return one valid smart_presentation_v2 JSON object only.
+tools:
+  - mcp-pptx:validate_presentation

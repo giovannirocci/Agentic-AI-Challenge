@@ -209,6 +209,8 @@ instructions: |
       "warn_on_non_office_fonts": true
     }
   }
+tools:
+  - mcp-pptx:validate_profile
 chat_with_docs:
   enabled: true
   generation:
