@@ -128,6 +128,57 @@ function createServer() {
     }
   );
 
+   // Tool 4: validates the generated brand validation rules JSON
+  server.registerTool(
+    "validate_rules",
+    {
+      description: "Validates a brand validation rules JSON against the brand_validation_rules_v1 schema",
+      inputSchema: {
+        rules: z.object({}).passthrough()
+      },
+    },
+    async ({ rules }) => {
+      const tmpPath = writeTmp(`rules_${Date.now()}.json`, rules);
+      const result = runScript(join(SCRIPTS_DIR, "validate_rules.js"), [tmpPath]);
+      unlinkSync(tmpPath);
+
+      return {
+        content: [{ type: "text", text: result.success ? result.stdout : result.stderr }],
+        isError: !result.success
+      };
+    }
+  );
+
+   // Tool 5: validates a presentation JSON against generated brand validation rules
+  server.registerTool(
+    "validate_deck_against_rules",
+    {
+      description: "Checks whether a presentation JSON follows the generated brand validation rules. Returns a structured validation report.",
+      inputSchema: {
+        presentation: z.object({}).passthrough(),
+        rules: z.object({}).passthrough()
+      },
+    },
+    async ({ presentation, rules }) => {
+      const suffix = Date.now();
+      const presentationPath = writeTmp(`presentation_${suffix}.json`, presentation);
+      const rulesPath = writeTmp(`rules_${suffix}.json`, rules);
+
+      const result = runScript(
+        join(SCRIPTS_DIR, "validate_deck_against_rules.js"),
+        [presentationPath, rulesPath]
+      );
+
+      unlinkSync(presentationPath);
+      unlinkSync(rulesPath);
+
+      return {
+        content: [{ type: "text", text: result.stdout || result.stderr }],
+        isError: !result.success
+      };
+    }
+  );
+
   return server;
 }
 
