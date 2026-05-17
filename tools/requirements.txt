@@ -1,3 +1,6 @@
 python-pptx
 pdfplumber
 pymupdf
+Pillow
+ibm-watsonx-ai
+python-dotenv
